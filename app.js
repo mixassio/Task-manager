@@ -1,3 +1,17 @@
+import Koa from 'koa';    
+const app = new Koa();
+
+// Setup handler.
+app.use(async ctx => {
+    ctx.body = "Hello World!";
+});
+
+// Start server.
+app.listen(3000);
+
+
+/*
+
 import Koa from 'koa';
 import Rollbar from 'rollbar';
 
@@ -16,3 +30,6 @@ export default () => {
   });
   return app;
 };
+
+
+*/
