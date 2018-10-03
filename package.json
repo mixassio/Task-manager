@@ -28,7 +28,12 @@
     "koa": "^2.5.3",
     "nodemon": "^1.18.4",
     "pug": "^2.0.3",
-    "rollbar": "^2.4.7"
+    "rollbar": "^2.4.7",
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/node": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "babel": "^6.23.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
