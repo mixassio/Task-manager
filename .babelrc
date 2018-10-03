@@ -1,12 +1,8 @@
 {
   "presets": [
-    "@babel/flow",
     ["@babel/env", {
       "targets": { "node": "current" },
       "ignoreBrowserslistConfig": true
-    }],
-    ["@babel/stage-0", {
-      "decoratorsLegacy": true
     }]
   ]
 }
