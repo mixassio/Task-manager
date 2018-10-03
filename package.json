@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "nodemon": "nodemon",
     "watch": "jest --watch",
-    "build": "rimraf dist/ && babel src --out-dir dist --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log",
+    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
     "prepublishOnly": "npm run build",
     "start": "npm run build && node dist/app.js"
   },

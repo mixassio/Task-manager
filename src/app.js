@@ -1,7 +1,7 @@
 import Koa from 'koa';
 import Rollbar from 'rollbar';
 
-const port = process.env.PORT || 8080
+const port = process.env.PORT || 5000
 const app = new Koa();
 
 const rollbar = new Rollbar('POST_SERVER_ITEM_ACCESS_TOKEN');
