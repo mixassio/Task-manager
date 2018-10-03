@@ -1,7 +1,7 @@
 install:
 	npm install
 start:
-	npm run nodemon -- --exec babel-node bin/server.js
+	npm run nodemon -- --exec babel-node src/app.js
 lint:
 	npx eslint .
 publish:
