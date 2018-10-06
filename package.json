@@ -12,6 +12,7 @@
     "watch": "jest --watch",
     "build": "babel src --out-dir dist --source-maps inline",
     "prepublishOnly": "npm run build",
+    "postinstall": "npm run build",
     "start": "npm run build && node dist/app.js"
   },
   "repository": {
