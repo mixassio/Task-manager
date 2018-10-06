@@ -47,14 +47,3 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 
 app.listen(port, () => console.log(`run on ${port}`));
-
-/**
-
-
- app.use(async (ctx) => {
-  ctx.body = 'Hello World!';
-});
-
-
-
- */

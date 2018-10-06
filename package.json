@@ -11,7 +11,7 @@
     "nodemon": "nodemon",
     "watch": "jest --watch",
     "gulp": "gulp",
-    "start": "node dist/app.js",
+    "start": "npx babel-node app.js",
     "webpack": "webpack",
     "build": "npm run webpack -- -p --env production && babel src --out-dir dist --source-maps inline",
     "postinstall": "npm run build",
