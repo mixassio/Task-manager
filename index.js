@@ -15,8 +15,6 @@ import session from 'koa-generic-session';
 import flash from 'koa-flash-simple';
 import favicon from 'koa-favicon';
 
-import mount from 'koa-mount';
-
 import Rollbar from 'rollbar';
 import container from './container';
 import addRoutes from './routes';
@@ -62,7 +60,7 @@ export default () => {
     return null;
   }));
   app.use(favicon());
-  app.use(mount('/assets', serve(path.join(__dirname, 'dist'))));
+  app.use(serve(path.join(__dirname, 'public')));
   app.use(koaLogger());
   const router = new Router();
   addRoutes(router, container);
