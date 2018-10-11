@@ -5,3 +5,4 @@ package-lock.json
 dist
 789.js
 public
+db.development.sqlite

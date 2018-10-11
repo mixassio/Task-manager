@@ -11,6 +11,7 @@
   },
   "scripts": {
     "test": "jest",
+    "sequelize": "sequelize",
     "nodemon": "nodemon",
     "watch": "jest --watch",
     "gulp": "gulp",
@@ -20,7 +21,7 @@
     "flow": "flow",
     "flow-typed": "flow-typed",
     "webpack": "webpack",
-    "build": "npm run webpack -- -p --env production",
+    "build": "npm run webpack -- -p --env production && npm run sequelize db:migrate",
     "postinstall": "npm run build",
     "prepublishOnly": "npm run build"
   },
@@ -70,11 +71,15 @@
     "mini-css-extract-plugin": "^0.4.3",
     "node-sass": "^4.9.3",
     "nodemon": "^1.18.4",
+    "pg": "^7.5.0",
     "popper.js": "^1.14.4",
     "postcss-loader": "^3.0.0",
     "pug": "^2.0.3",
     "rollbar": "^2.4.7",
     "sass-loader": "^7.1.0",
+    "sequelize": "^4.39.0",
+    "sequelize-cli": "^4.1.1",
+    "sqlite3": "^4.0.2",
     "style-loader": "^0.23.1",
     "underscore": "^1.9.1",
     "webpack": "^4.20.2"
