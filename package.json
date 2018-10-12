@@ -21,7 +21,7 @@
     "flow": "flow",
     "flow-typed": "flow-typed",
     "webpack": "webpack",
-    "build": "npm run webpack -- -p --env production",
+    "build": "npm run webpack -- -p --env production && npm run sequelize db:migrate",
     "postinstall": "npm run build",
     "prepublishOnly": "npm run build"
   },
