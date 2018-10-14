@@ -1,11 +1,7 @@
 import webpack from 'webpack';
 import path from 'path';
 import autoprefixer from 'autoprefixer';
-/*
-const webpack = require('webpack');
-const path = require('path');
-const autoprefixer = require('autoprefixer');
-*/
+
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
   entry: ['./src/index.js'],
