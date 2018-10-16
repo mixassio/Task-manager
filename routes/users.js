@@ -30,7 +30,7 @@ export default (router, { logger }) => {
         where: { id },
       });
       ctx.render('users/show', { user });
-    })
-    .get('userUpdate', '/users/:id/edit', async (ctx) => {})
-    .patch('userUpdate', '/users/:id', async (ctx) => {});
+    });
+  // .get('userUpdate', '/users/:id/edit', async (ctx) => {})
+  // .patch('userUpdate', '/users/:id', async (ctx) => {});
 };

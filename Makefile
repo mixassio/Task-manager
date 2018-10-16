@@ -1,5 +1,5 @@
 start:
-	npm run start
+	DEBUG=app npx nodemon --watch .  --ext '.js' --exec npx gulp server
 
 lint:
 	npm run eslint .
