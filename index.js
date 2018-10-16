@@ -41,7 +41,8 @@ export default () => {
     }
   });
 
-  app.keys = [process.env.SESSION_SECRET];
+  // app.keys = [process.env.SESSION_SECRET];
+  app.keys = ['im a newer secret', 'i like turtle'];
   app.use(session(app));
   app.use(flash());
   app.use(async (ctx, next) => {
@@ -53,8 +54,9 @@ export default () => {
   });
   app.use(bodyParser());
   app.use(methodOverride((req) => {
-    // return req?.body?._method;
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+      logger('req.body', req.body);
+      logger('_method', _method); // eslint-disable-line
       return req.body._method; // eslint-disable-line
     }
     return null;

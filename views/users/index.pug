@@ -1,15 +1,20 @@
 extends /layouts/application.pug
 
 block content
-  table.table.table-stripped
-    thead
+  h3.text-xs-center Users
+  if users.length > 0
+    table.table
       tr
-        th Full Name
-        th Email
-        th Created At
-    tbody
-      each user in users
+        th Name / email
+        th Actions
+      for user in users
         tr
-          td= user.fullName
-          td= user.email
-          td= user.createdAt
+          td
+            a(href=`/users/${user.id}`)= user.fullName
+          td
+            if userId === user.id
+              a(href=`/users/${user.id}/edit`) Edit
+              form.form-inline.d-inline-block(action=`/users/${user.id}?_method=DELETE` method='post')
+                button.btn.btn-link(type='submit') Delete
+  else
+    p Пусто

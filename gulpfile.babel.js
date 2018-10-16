@@ -16,7 +16,6 @@ gulp.task('console', () => {
     replServer.context[key] = container[key];
   });
 });
-
 gulp.task('server', (cb) => {
   getServer().listen(process.env.PORT || 4000, cb);
 });

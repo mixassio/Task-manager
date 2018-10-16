@@ -41,8 +41,8 @@ export default (sequelize, DataTypes) => {
   }, {
     getterMethods: {
       fullName() {
-        console.log('hello', `${this.firstName} ${this.lastName}`);
-        return `${this.firstName} ${this.lastName}`;
+        // console.log('hello', `${this.firstName} ${this.lastName} ${this.email}`);
+        return `${this.firstName} ${this.lastName} / ${this.email}`;
       },
       // associate(models) {
       // associations can be defined here
