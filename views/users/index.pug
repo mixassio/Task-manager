@@ -14,7 +14,7 @@ block content
           td
             if userId === user.id
               a(href=`/users/${user.id}/edit`) Edit
-              form.form-inline.d-inline-block(action=`/users/${user.id}?_method=DELETE` method='post')
-                button.btn.btn-link(type='submit') Delete
+              a(href=`/users/${user.id}` data-method='delete' rel='nofollow') Delete
   else
     p Пусто
+

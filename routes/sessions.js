@@ -16,7 +16,6 @@ export default (router, { logger }) => {
           email,
         },
       });
-      // console.log('user', user, user.passwordDigest, encrypt(password))
       if (user && user.passwordDigest === password) {
         ctx.session.userId = user.id;
         logger(`Create new session. User= ${user.id}`);

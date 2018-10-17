@@ -24,13 +24,31 @@ export default (router, { logger }) => {
         ctx.render('users/new', { f: buildFormObj(user, e) });
       }
     })
+    .delete('userDelete', '/users/:id', async (ctx) => {
+      logger(ctx.params);
+      const { id } = ctx.params;
+      const user = await User.findOne({
+        where: { id },
+      });
+      const anything = await User.destroy({
+        where: { id },
+      });
+      logger('deleting user', anything, user.id);
+      ctx.flash.set('User has been deleted');
+      ctx.render(router.url('root'));
+    })
     .get('userShow', '/users/:id', async (ctx) => {
       const { id } = ctx.params;
       const user = await User.findOne({
         where: { id },
       });
       ctx.render('users/show', { user });
+    })
+    .get('userUpdate', '/users/:id/edit', async (ctx) => {
+      const { id } = ctx.params;
+      const user = await User.findOne({
+        where: { id },
+      });
+      ctx.render('users/edit', { user, f: buildFormObj(user) });
     });
-  // .get('userUpdate', '/users/:id/edit', async (ctx) => {})
-  // .patch('userUpdate', '/users/:id', async (ctx) => {});
 };
