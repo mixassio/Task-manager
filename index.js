@@ -55,8 +55,7 @@ export default () => {
   app.use(bodyParser());
   app.use(methodOverride((req) => {
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
-      logger('req.body', req.body);
-      logger('_method', _method); // eslint-disable-line
+      logger('change method - req.body', req.body);
       return req.body._method; // eslint-disable-line
     }
     return null;
