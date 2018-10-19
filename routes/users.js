@@ -35,7 +35,9 @@ export default (router, { logger }) => {
       });
       logger('deleting user', anything, user.id);
       ctx.flash.set('User has been deleted');
-      ctx.render(router.url('root'));
+      logger(`Delete session user= ${ctx.session.userId}`);
+      ctx.session = {};
+      ctx.redirect(router.url('root'));
     })
     .get('userShow', '/users/:id', async (ctx) => {
       const { id } = ctx.params;
