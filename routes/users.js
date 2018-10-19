@@ -9,10 +9,6 @@ export default (router, { logger }) => {
       logger('userLoginID', userId);
       ctx.render('users', { users, userId });
     })
-    .get('newUser', '/users/new', (ctx) => {
-      const user = User.build();
-      ctx.render('users/new', { f: buildFormObj(user) });
-    })
     .post('users', '/users', async (ctx) => {
       const { form } = ctx.request.body;
       const user = User.build(form);
@@ -23,6 +19,19 @@ export default (router, { logger }) => {
       } catch (e) {
         ctx.render('users/new', { f: buildFormObj(user, e) });
       }
+    })
+    .patch('users', '/users', async (ctx) => {
+      const { form } = ctx.request.body;
+      const { userId: id } = ctx.session;
+      const user = await User.findOne({
+        where: { id },
+      });
+      await user.update(form);
+      ctx.render('users/show', { user });
+    })
+    .get('newUser', '/users/new', (ctx) => {
+      const user = User.build();
+      ctx.render('users/new', { f: buildFormObj(user) });
     })
     .delete('userDelete', '/users/:id', async (ctx) => {
       logger(ctx.params);
