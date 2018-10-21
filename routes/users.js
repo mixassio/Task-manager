@@ -22,6 +22,7 @@ export default (router, { logger }) => {
     })
     .patch('users', '/users', async (ctx) => {
       const { form } = ctx.request.body;
+      console.log(form);
       const { userId: id } = ctx.session;
       const user = await User.findOne({
         where: { id },

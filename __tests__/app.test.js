@@ -26,29 +26,53 @@ const user3 = {
 
 describe('requests', () => {
   let server;
-  beforeEach(() => {
+  beforeEach(async () => {
     server = app().listen();
+    await db.sequelize.sync({ force: true });
   });
   afterEach((done) => {
     server.close();
     done();
   });
 
-
   it('GET 200', async () => {
-    const res = await request.agent(server)
-      .get('/');
-    expect(res.status).toBe(200);
+    await request.agent(server).get('/').expect(200);
   });
 
   it('GET 404', async () => {
-    const res = await request.agent(server)
-      .get('/wrong-path');
-    expect(res.status).toBe(404);
+    await request.agent(server).get('/wrong-path').expect(404);
+  });
+
+  it('GET /Users', async () => {
+    await request.agent(server).get('/users').expect(200);
   });
 });
 
-describe('users', () => {
+describe('autentification', () => {
+  let server;
+  beforeEach(async () => {
+    server = app().listen();
+    await db.sequelize.sync({ force: true });
+  });
+  afterEach((done) => {
+    server.close();
+    done();
+  });
+
+  it('signIn', async () => {
+    await request.agent(server).post('/users').send({ form: user1 }).expect(302);
+    await request.agent(server).get('/session/new').expect(200);
+    await request.agent(server).post('/session').send({ form: user1 }).expect(302);
+  });
+  it('signOut', async () => {
+    await request.agent(server).post('/users').send({ form: user1 }).expect(302);
+    await request.agent(server).get('/session/new').expect(200);
+    await request.agent(server).post('/session').send({ form: user1 }).expect(302);
+    await request.agent(server).delete('/session').expect(302);
+  });
+});
+
+describe('users CRUD', () => {
   let server;
   beforeEach(async () => {
     server = app().listen();
@@ -60,21 +84,28 @@ describe('users', () => {
   });
 
   it('Create user test', async () => {
-    const res = await request.agent(server)
-      .post('/users')
-      .send({ form: user1 });
-    expect(res.status).toBe(302);
+    await request.agent(server).post('/users').send({ form: user1 }).expect(302);
     const { email, firstName } = user1;
-    const user = await db.User.findOne({
-      where: { email },
-    });
+    const user = await db.User.findOne({ where: { email } });
     expect(user.firstName).toBe(firstName);
   });
   it('Create many users', async () => {
-    await request.agent(server).post('/users').send({ form: user1 });
-    await request.agent(server).post('/users').send({ form: user2 });
-    await request.agent(server).post('/users').send({ form: user3 });
+    await request.agent(server).post('/users').send({ form: user1 }).expect(302);
+    await request.agent(server).post('/users').send({ form: user2 }).expect(302);
+    await request.agent(server).post('/users').send({ form: user3 }).expect(302);
     const users = await db.User.findAll();
     expect(users).toHaveLength(3);
   });
+  it('Update user', async () => {
+    await request.agent(server).post('/users').send({ form: user1 }).expect(302);
+    // const { email } = user1;
+    // const user = await db.User.findOne({ where: { email } });
+    // await request.agent(server).patch('/users').send({ form: user2 }).expect(302);
+    // const { firstName } = user2;
+    // expect(user.firstName).toBe(firstName);
+  });
 });
+/*
+1. change patch /users/:id
+2. add delete
+*/
