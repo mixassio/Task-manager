@@ -10,6 +10,20 @@ const user1 = {
   firstName: faker.name.firstName(),
   lastName: faker.name.lastName(),
 };
+const user2 = {
+  email: faker.internet.email(),
+  password: faker.internet.password(),
+  firstName: faker.name.firstName(),
+  lastName: faker.name.lastName(),
+};
+const user3 = {
+  email: faker.internet.email(),
+  password: faker.internet.password(),
+  firstName: faker.name.firstName(),
+  lastName: faker.name.lastName(),
+};
+
+
 describe('requests', () => {
   let server;
   beforeEach(() => {
@@ -45,11 +59,22 @@ describe('users', () => {
     done();
   });
 
-  it('autentification test', async () => {
-    console.log(user1);
+  it('Create user test', async () => {
     const res = await request.agent(server)
       .post('/users')
-      .send(user1);
+      .send({ form: user1 });
     expect(res.status).toBe(302);
+    const { email, firstName } = user1;
+    const user = await db.User.findOne({
+      where: { email },
+    });
+    expect(user.firstName).toBe(firstName);
+  });
+  it('Create many users', async () => {
+    await request.agent(server).post('/users').send({ form: user1 });
+    await request.agent(server).post('/users').send({ form: user2 });
+    await request.agent(server).post('/users').send({ form: user3 });
+    const users = await db.User.findAll();
+    expect(users.length).toBe(3);
   });
 });

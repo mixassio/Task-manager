@@ -17,7 +17,7 @@ export default (router, { logger }) => {
         },
       });
       logger(`User was finded ${user.id}`);
-      logger(user.password, user.passwordDigest, encrypt(password));
+      logger(user.passwordDigest, encrypt(password));
       if (user && user.passwordDigest === encrypt(password)) {
         ctx.session.userId = user.id;
         logger(`Create new session. User= ${user.id}`);
