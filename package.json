@@ -21,7 +21,7 @@
     "flow": "flow",
     "flow-typed": "flow-typed",
     "webpack": "webpack",
-    "build": "npm run webpack -- -p --env production && npm run sequelize db:migrate",
+    "build": "npm run webpack -- -p --env production && npm run sequelize db:migrate && npm run sequelize db:seed:all",
     "postinstall": "npm run build",
     "prepublishOnly": "npm run build"
   },
@@ -96,6 +96,7 @@
     "eslint-plugin-flowtype": "^2.50.3",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jest": "^21.24.1",
+    "faker": "^4.1.0",
     "flow-bin": "^0.56.0",
     "flow-typed": "^2.5.1",
     "jest": "^23.6.0",

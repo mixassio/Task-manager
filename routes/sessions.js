@@ -1,5 +1,5 @@
 import buildFormObj from '../lib/formObjectBuilder';
-// import { encrypt } from '../lib/secure';
+import { encrypt } from '../lib/secure';
 import { User } from '../models';
 
 export default (router, { logger }) => {
@@ -16,7 +16,9 @@ export default (router, { logger }) => {
           email,
         },
       });
-      if (user && user.passwordDigest === password) {
+      logger(`User was finded ${user.id}`);
+      logger(user.password, user.passwordDigest, encrypt(password));
+      if (user && user.passwordDigest === encrypt(password)) {
         ctx.session.userId = user.id;
         logger(`Create new session. User= ${user.id}`);
         ctx.redirect(router.url('root'));

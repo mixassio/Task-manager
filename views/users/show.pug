@@ -1,4 +1,12 @@
 extends /layouts/application.pug
 
 block content
-  h3= user.firstName
+  .row
+    .col-9
+        h2 User data:
+        br
+        p First Name: <strong>#{user.firstName}</strong>
+        p Last Name: <strong>#{user.lastName}</strong>
+        p Email: <strong>#{user.email}</strong>
+        h4 Creation date: <strong>#{user.createdAt}</strong>
+

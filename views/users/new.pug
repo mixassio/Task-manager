@@ -1,10 +1,12 @@
 extends /layouts/application.pug
 
 block content
-  h3.text-xs-center Create new user
-  +formFor(f, { url: urlFor('users'), method: 'post' })
-    +input(f, 'email')
-    +input(f, 'firstName')
-    +input(f, 'lastName')
-    +input(f, 'passwordDigest', { as: 'password' })
-    +button(f)
+    h2.text-center Create new user
+    .row.mt-3
+      .col-sm-6.mx-auto
+        +formFor(f, { url: urlFor('users'), method: 'post' })
+          +input(f, 'email')
+          +input(f, 'firstName')
+          +input(f, 'lastName')
+          +input(f, 'password', 'Input a password, at least 3 symbols long', { as: 'password' })
+          +button(f)

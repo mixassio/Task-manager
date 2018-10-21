@@ -29,7 +29,7 @@ export default (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.VIRTUAL,
-      set: (value) => {
+      set: function set(value) {
         this.setDataValue('passwordDigest', encrypt(value));
         this.setDataValue('password', value);
         return value;
