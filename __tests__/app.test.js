@@ -75,6 +75,6 @@ describe('users', () => {
     await request.agent(server).post('/users').send({ form: user2 });
     await request.agent(server).post('/users').send({ form: user3 });
     const users = await db.User.findAll();
-    expect(users.length).toBe(3);
+    expect(users).toHaveLength(3);
   });
 });
