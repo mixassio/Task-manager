@@ -106,8 +106,10 @@ describe('users CRUD', () => {
     const { firstName } = user2;
     expect(userUpdate.firstName).toBe(firstName);
   });
+  it('Delete user', async () => {
+    await request.agent(server).post('/users').send({ form: user1 }).expect(302);
+    const { email } = user1;
+    const user = await db.User.findOne({ where: { email } });
+    await request.agent(server).delete(`/users/${user.id}`).expect(302);
+  });
 });
-/*
-1. change patch /users/:id
-2. add delete
-*/
