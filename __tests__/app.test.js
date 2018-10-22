@@ -102,7 +102,6 @@ describe('users CRUD', () => {
     const user = await db.User.findOne({ where: { email } });
     await request.agent(server).patch(`/users/${user.id}`).send({ form: { firstName: user2.firstName } }).expect(200);
     const userUpdate = await db.User.findOne({ where: { email } });
-    console.log(userUpdate);
     const { firstName } = user2;
     expect(userUpdate.firstName).toBe(firstName);
   });

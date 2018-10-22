@@ -23,13 +23,14 @@ export default (router, { logger }) => {
     .patch('userUpdate', '/users/:id', async (ctx) => {
       const { form } = ctx.request.body;
       const { id } = ctx.params;
-      console.log('idUser', id, 'Updare-------->>>>', form);
-      // const { userId: id } = ctx.session;
-      const user = await User.findOne({
-        where: { id },
-      });
-      await user.update(form);
-      ctx.render('users/show', { user });
+      const user = await User.findOne({ where: { id } });
+      try {
+        await user.update(form);
+        ctx.flash.set('User has been updated');
+        ctx.render('users/show', { user });
+      } catch (e) {
+        ctx.render('users/edit', { user, f: buildFormObj(user, e) });
+      }
     })
     .get('newUser', '/users/new', (ctx) => {
       const user = User.build();
@@ -38,30 +39,22 @@ export default (router, { logger }) => {
     .delete('userDelete', '/users/:id', async (ctx) => {
       logger(ctx.params);
       const { id } = ctx.params;
-      const user = await User.findOne({
-        where: { id },
-      });
-      const anything = await User.destroy({
-        where: { id },
-      });
+      const user = await User.findOne({ where: { id } });
+      const anything = await User.destroy({ where: { id } });
       logger('deleting user', anything, user.id);
-      ctx.flash.set('User has been deleted');
       logger(`Delete session user= ${ctx.session.userId}`);
       ctx.session = {};
       ctx.redirect(router.url('root'));
+      ctx.flash.set('User has been deleted');
     })
     .get('userShow', '/users/:id', async (ctx) => {
       const { id } = ctx.params;
-      const user = await User.findOne({
-        where: { id },
-      });
+      const user = await User.findOne({ where: { id } });
       ctx.render('users/show', { user });
     })
     .get('userUpdate', '/users/:id/edit', async (ctx) => {
       const { id } = ctx.params;
-      const user = await User.findOne({
-        where: { id },
-      });
+      const user = await User.findOne({ where: { id } });
       ctx.render('users/edit', { user, f: buildFormObj(user) });
     });
 };
