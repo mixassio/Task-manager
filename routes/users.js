@@ -20,10 +20,11 @@ export default (router, { logger }) => {
         ctx.render('users/new', { f: buildFormObj(user, e) });
       }
     })
-    .patch('users', '/users', async (ctx) => {
+    .patch('userUpdate', '/users/:id', async (ctx) => {
       const { form } = ctx.request.body;
-      console.log(form);
-      const { userId: id } = ctx.session;
+      const { id } = ctx.params;
+      console.log('idUser', id, 'Updare-------->>>>', form);
+      // const { userId: id } = ctx.session;
       const user = await User.findOne({
         where: { id },
       });

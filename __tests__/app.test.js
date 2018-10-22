@@ -98,11 +98,13 @@ describe('users CRUD', () => {
   });
   it('Update user', async () => {
     await request.agent(server).post('/users').send({ form: user1 }).expect(302);
-    // const { email } = user1;
-    // const user = await db.User.findOne({ where: { email } });
-    // await request.agent(server).patch('/users').send({ form: user2 }).expect(302);
-    // const { firstName } = user2;
-    // expect(user.firstName).toBe(firstName);
+    const { email } = user1;
+    const user = await db.User.findOne({ where: { email } });
+    await request.agent(server).patch(`/users/${user.id}`).send({ form: { firstName: user2.firstName } }).expect(200);
+    const userUpdate = await db.User.findOne({ where: { email } });
+    console.log(userUpdate);
+    const { firstName } = user2;
+    expect(userUpdate.firstName).toBe(firstName);
   });
 });
 /*
