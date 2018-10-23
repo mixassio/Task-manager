@@ -15,7 +15,7 @@ export default (router, { logger }) => {
       try {
         await user.save();
         ctx.flash.set('User has been created');
-        ctx.redirect(router.url('root'));
+        ctx.redirect(router.url('users'));
       } catch (e) {
         ctx.render('users/new', { f: buildFormObj(user, e) });
       }
