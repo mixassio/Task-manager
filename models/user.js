@@ -5,20 +5,28 @@ export default (sequelize, DataTypes) => {
     firstName: {
       type: DataTypes.STRING,
       validate: {
-        notEmpty: true,
+        notEmpty: {
+          msg: 'First name can not be empty',
+        },
       },
     },
     lastName: {
       type: DataTypes.STRING,
       validate: {
-        notEmpty: true,
+        notEmpty: {
+          msg: 'Last name can not be empty',
+        },
       },
     },
     email: {
       type: DataTypes.STRING,
-      unique: true,
+      unique: {
+        msg: 'Email already exist',
+      },
       validate: {
-        isEmail: true,
+        isEmail: {
+          msg: 'Email is wrong',
+        },
       },
     },
     passwordDigest: {
