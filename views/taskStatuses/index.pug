@@ -1,7 +1,8 @@
 extends /layouts/application.pug
 
 block content
-  h3.text-xs-center Tasks
+  h3.text-xs-center Tasks status
+  a(href=urlFor('newtaskStatus')) New Task Status
   .row.mt-3
       .col-sm-6.mx-auto
         if taskStatuses.length > 0
@@ -12,10 +13,9 @@ block content
             for taskStatus in taskStatuses
               tr
                 td
-                  a(href=`/taskStatuses/${taskStatus.id}`)= taskStatus.name
+                  =taskStatus.name
                 td
-                  a(href=`/taskStatuses/${taskStatus.id}/edit`) Edit
-                  a(href=`/taskStatuses/${taskStatus.id}` data-method='delete' rel='nofollow') Delete
+                  a(href=urlFor('taskStatusUpdate', taskStatus.id)) Edit
+                  a(href=urlFor('taskStatusDelete', taskStatus.id) data-method='delete' rel='nofollow') Delete
         else
           p Пусто
-

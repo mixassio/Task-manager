@@ -4,6 +4,6 @@ block content
     h2.text-center Edit taskStatus: #{taskStatus.name}
     .row.mt-3
       .col-sm-6.mx-auto
-        +formFor(f, { url: `/taskStatuses/${taskStatus.id}`, method: 'patch' })
+        +formFor(f, { url: urlFor('taskStatusUpdate', taskStatus.id), method: 'patch' })
           +input(f, 'name')
           +button(f)

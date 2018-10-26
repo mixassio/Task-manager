@@ -23,7 +23,7 @@ export default (router, { logger }) => {
       const taskStatus = TaskStatus.build();
       ctx.render('taskStatuses/new', { f: buildFormObj(taskStatus) });
     })
-    .patch('taskStatusUpdate', '/taskStatuses/:id', async (ctx) => {
+    .patch('taskStatuses', '/taskStatuses/:id/edit', async (ctx) => {
       const { form } = ctx.request.body;
       const { id } = ctx.params;
       const taskStatus = await TaskStatus.findOne({ where: { id } });

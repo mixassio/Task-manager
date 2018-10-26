@@ -12,11 +12,10 @@ block content
             for user in users
               tr
                 td
-                  a(href=`/users/${user.id}`)= user.fullName
+                  a(href=urlFor('userShow', user.id))= user.fullName
                 td
                   if userId === user.id
-                    a(href=`/users/${user.id}/edit`) Edit
-                    a(href=`/users/${user.id}` data-method='delete' rel='nofollow') Delete
+                    a(href=urlFor('userUpdate', user.id)) Edit
+                    a(href=urlFor('userDelete', user.id) data-method='delete' rel='nofollow') Delete
         else
           p Пусто
-
