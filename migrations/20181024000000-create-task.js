@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.createTable('Tasks', {
     id: {
       allowNull: false,
@@ -10,16 +10,33 @@ export default {
       type: Sequelize.STRING,
     },
     description: {
-      type: Sequelize.TEXT,
+      type: Sequelize.STRING(1000),
     },
-    creator: {
+    creatorId: {
       type: Sequelize.INTEGER,
+      onDelete: 'CASCADE',
+      allowNull: false,
       references: {
         model: 'Users',
         key: 'id',
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+    },
+    assignedToId: {
+      type: Sequelize.INTEGER,
+      onDelete: 'CASCADE',
+      references: {
+        model: 'Users',
+        key: 'id',
+      },
+    },
+    statusId: {
+      type: Sequelize.INTEGER,
+      onDelete: 'CASCADE',
+      allowNull: false,
+      references: {
+        model: 'TaskStatuses',
+        key: 'id',
+      },
     },
     createdAt: {
       allowNull: false,

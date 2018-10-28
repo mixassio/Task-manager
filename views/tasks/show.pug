@@ -1,0 +1,13 @@
+extends /layouts/application.pug
+
+block content
+  .row
+    .col-9
+        h2 Task: #{task.name}
+        br
+        p Title: <strong>#{task.name}</strong>
+        p description: <strong>#{task.description}</strong>
+        p User creator: <strong>#{task.creatorId}</strong>
+        p Status: <strong>#{task.statusId}</strong>
+        p Creation date: <strong>#{task.createdAt}</strong>
+        p Update date: <strong>#{task.updatedAt}</strong>

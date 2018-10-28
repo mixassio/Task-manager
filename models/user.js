@@ -57,15 +57,5 @@ export default (sequelize, DataTypes) => {
       // },
     },
   });
-
-  User.associate = (models) => {
-    User.hasMany(models.Task, {
-      as: 'tasks',
-      foreignKey: {
-        name: 'assignee_id',
-        allowNull: false,
-      },
-    });
-  };
   return User;
 };

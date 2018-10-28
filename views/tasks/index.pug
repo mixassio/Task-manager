@@ -1,0 +1,21 @@
+extends /layouts/application.pug
+
+block content
+  h3.text-xs-center Tasks
+  .row.mt-3
+      .col-sm-6.mx-auto
+        if tasks.length > 0
+          table.table
+            tr
+              th title
+              th Actions
+            for task in tasks
+              tr
+                td
+                  a(href=urlFor('taskShow', task.id))= task.name
+                td
+                  if userId === task.creatorId
+                    a(href=urlFor('taskUpdate', task.id)) Edit
+                    a(href=urlFor('taskDelete', task.id) data-method='delete' rel='nofollow') Delete
+        else
+          p Пусто
