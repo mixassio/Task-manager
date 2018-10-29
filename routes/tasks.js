@@ -56,7 +56,7 @@ export default (router, { logger }) => {
       logger(ctx.params);
       const { id } = ctx.params;
       const task = await Task.findOne({ where: { id } });
-      ctx.render('tasks/task', { task });
+      ctx.render('tasks/show', { task });
     })
     .get('taskUpdate', '/tasks/:id/edit', async (ctx) => {
       const { id } = ctx.params;
