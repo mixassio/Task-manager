@@ -2,6 +2,7 @@ extends /layouts/application.pug
 
 block content
   h3.text-xs-center Tasks
+  a(href=urlFor('newTask')) New Task
   .row.mt-3
       .col-sm-6.mx-auto
         if tasks.length > 0

@@ -1,5 +1,5 @@
 import buildFormObj from '../lib/formObjectBuilder';
-import { Task } from '../models';
+import { Task, TaskStatus } from '../models';
 
 export default (router, { logger }) => {
   router
@@ -12,8 +12,10 @@ export default (router, { logger }) => {
     .post('tasks', '/tasks', async (ctx) => {
       const { form } = ctx.request.body;
       form.creatorId = ctx.session.userId;
-      form.statusId = 1;
-      logger('get from form', form);
+      logger('get from form1', form);
+      const status = await TaskStatus.findOne({ where: { name: 'new' } });
+      form.taskStatusId = status.id;
+      logger('get from form2', form);
       const task = await Task.build(form);
       logger(task);
       try {
@@ -54,7 +56,7 @@ export default (router, { logger }) => {
       logger(ctx.params);
       const { id } = ctx.params;
       const task = await Task.findOne({ where: { id } });
-      ctx.render('tasks/show', { task });
+      ctx.render('tasks/task', { task });
     })
     .get('taskUpdate', '/tasks/:id/edit', async (ctx) => {
       const { id } = ctx.params;

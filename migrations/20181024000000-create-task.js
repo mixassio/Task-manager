@@ -29,7 +29,7 @@ module.exports = {
         key: 'id',
       },
     },
-    statusId: {
+    taskStatusId: {
       type: Sequelize.INTEGER,
       onDelete: 'CASCADE',
       allowNull: false,

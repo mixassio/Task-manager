@@ -49,13 +49,13 @@ export default (sequelize, DataTypes) => {
   }, {
     getterMethods: {
       fullName() {
-        // console.log('hello', `${this.firstName} ${this.lastName} ${this.email}`);
         return `${this.firstName} ${this.lastName} / ${this.email}`;
       },
-      // associate(models) {
-      // associations can be defined here
-      // },
     },
   });
+  User.associate = ({ Task }) => {
+    User.hasMany(Task, { as: 'InitializedTask', foreignKey: 'creatorId' });
+    User.hasMany(Task, { as: 'Task', foreignKey: 'assignedToId' });
+  };
   return User;
 };

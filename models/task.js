@@ -13,23 +13,12 @@ export default (sequelize, DataTypes) => {
   });
 
   Task.associate = (models) => {
-    models.Task.belongsTo(models.User, {
-      as: 'creator',
-      foreignKey: {
-        allowNull: false,
-      },
+    Task.belongsTo(models.TaskStatus, { as: 'taskStatus', foreignKey: 'taskStatusId' });
+    Task.belongsTo(models.User, { as: 'creator', foreignKey: 'creatorId' });
+    Task.belongsTo(models.User, { as: 'assignedTo', foreignKey: 'assignedToId' });
+    Task.addScope('full', {
+      include: ['taskStatus', 'creator', 'assignedTo'],
     });
-    models.Task.belongsTo(models.User, { as: 'assignedTo' });
-    models.Task.belongsTo(models.TaskStatus, {
-      as: 'status',
-      foreignKey: {
-        allowNull: false,
-      },
-    });
-    models.Task.belongsToMany(
-      models.Tag,
-      { through: 'TaskTags', foreignKey: 'taskId', otherKey: 'tagId' },
-    );
   };
 
   return Task;
