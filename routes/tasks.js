@@ -12,6 +12,7 @@ export default (router, { logger }) => {
     .post('tasks', '/tasks', async (ctx) => {
       const { form } = ctx.request.body;
       form.creatorId = ctx.session.userId;
+      form.assignedToId = ctx.session.userId;
       logger('get from form1', form);
       const status = await TaskStatus.findOne({ where: { name: 'new' } });
       form.taskStatusId = status.id;
@@ -40,6 +41,10 @@ export default (router, { logger }) => {
       }
     })
     .get('newTask', '/tasks/new', (ctx) => {
+      if (!ctx.session.userId) {
+        ctx.flash.set('Only reg user can create tasks');
+        ctx.redirect(router.url('newSession'));
+      }
       const task = Task.build();
       ctx.render('tasks/new', { f: buildFormObj(task) });
     })
@@ -55,7 +60,8 @@ export default (router, { logger }) => {
     .get('taskShow', '/tasks/:id', async (ctx) => {
       logger(ctx.params);
       const { id } = ctx.params;
-      const task = await Task.findOne({ where: { id } });
+      const task = await Task.findOne({ where: { id }, include: ['taskStatus', 'creator', 'assignedTo'] });
+      logger('task was fineded:', task);
       ctx.render('tasks/show', { task });
     })
     .get('taskUpdate', '/tasks/:id/edit', async (ctx) => {
