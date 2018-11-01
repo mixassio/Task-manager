@@ -1,4 +1,5 @@
 import buildFormObj from '../lib/formObjectBuilder';
+import { encrypt } from '../lib/secure';
 import { User } from '../models';
 
 export default (router, { logger }) => {
@@ -56,5 +57,26 @@ export default (router, { logger }) => {
       const { id } = ctx.params;
       const user = await User.findOne({ where: { id } });
       ctx.render('users/edit', { user, f: buildFormObj(user) });
+    })
+    .get('editPassword', '/users/:id/password/edit', async (ctx) => {
+      const { id } = ctx.params;
+      const user = await User.findOne({ where: { id } });
+      ctx.render('users/editPassword', { user, f: buildFormObj(user) });
+    })
+    .patch('patchUserPassword', '/users/:id/password', async (ctx) => {
+      const { oldPassword, newPassword } = ctx.request.body.form;
+      const { id } = ctx.params;
+      const user = await User.findOne({ where: { id } });
+      if (encrypt(oldPassword) !== user.passwordDigest) {
+        ctx.flash.set('Password is wrong');
+        ctx.render('users/editPassword', { user, f: buildFormObj(user) });
+      }
+      try {
+        await user.update({ passwordDigest: encrypt(newPassword) });
+        ctx.flash.set('Password has been updated');
+        ctx.redirect(router.url('users'));
+      } catch (e) {
+        ctx.render('users/editPassword', { user, f: buildFormObj(user, e) });
+      }
     });
 };

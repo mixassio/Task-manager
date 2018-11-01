@@ -8,5 +8,5 @@ block content
           +input(f, 'email')
           +input(f, 'firstName')
           +input(f, 'lastName')
-          +input(f, 'passwordDigest', { as: 'password' })
+          a(href=urlFor('editPassword', user.id)) Edit password
           +button(f)
