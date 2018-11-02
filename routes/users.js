@@ -54,8 +54,8 @@ export default (router, { logger }) => {
       ctx.render('users/show', { user });
     })
     .get('userUpdate', '/users/:id/edit', async (ctx) => {
-      const { id } = ctx.params;
-      const user = await User.findOne({ where: { id } });
+      const { userId } = ctx.session;
+      const user = await User.findOne({ where: { id: userId } });
       ctx.render('users/edit', { user, f: buildFormObj(user) });
     })
     .get('editPassword', '/users/:id/password/edit', async (ctx) => {
