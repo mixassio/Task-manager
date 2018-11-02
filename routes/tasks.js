@@ -4,7 +4,7 @@ import { Task, TaskStatus } from '../models';
 export default (router, { logger }) => {
   router
     .get('tasks', '/tasks', async (ctx) => {
-      const tasks = await Task.findAll();
+      const tasks = await Task.findAll({ include: ['taskStatus', 'creator', 'assignedTo'] });
       const { userId } = ctx.session;
       logger('userLoginID', userId);
       ctx.render('tasks', { tasks, userId });

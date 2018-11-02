@@ -6,5 +6,5 @@ block content
       .col-sm-6.mx-auto
         +formFor(f, { url: urlFor('taskUpdate', task.id), method: 'patch' })
           +input(f, 'name')
-          +input(f, 'description')
+          +textarea(f, 'description')
           +button(f)
