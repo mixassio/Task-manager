@@ -1,5 +1,17 @@
+import _ from 'lodash';
 import buildFormObj from '../lib/formObjectBuilder';
 import { Task, TaskStatus, Tag } from '../models';
+
+const getTagsByNames = tagsNames => Promise.all(tagsNames
+  .map(name => Tag.findOne({ where: { name } })))
+  .then((results) => {
+    const foundTags = results.filter(v => v);
+    const foundTagsNames = foundTags.map(tag => tag.name);
+    return Promise.all(_.difference(tagsNames, foundTagsNames)
+      .map(name => Tag.build({ name }).save()))
+      .then(createdTags => [...foundTags, ...createdTags]);
+  });
+
 
 export default (router, { logger }) => {
   router
@@ -17,15 +29,18 @@ export default (router, { logger }) => {
       const status = await TaskStatus.findOne({ where: { name: 'new' } });
       form.taskStatusId = status.id;
       logger('get from form2', form);
+      const { tagsName } = form;
+      const tags = await getTagsByNames(tagsName.split(',').map(v => v.trim()).filter(v => v));
       const task = await Task.build(form);
-      const tag = await Tag.build({ name: 'tag2' });
-      await tag.save();
       try {
         await task.save();
-        await task.setTags(tag);
+        logger('task is save');
+        await task.addTags(tags);
+        logger('tags is added');
         ctx.flash.set('Task has been created');
         ctx.redirect(router.url('tasks'));
       } catch (e) {
+        logger(e);
         ctx.render('tasks/new', { f: buildFormObj(task, e) });
       }
     })
@@ -62,8 +77,8 @@ export default (router, { logger }) => {
     .get('taskShow', '/tasks/:id', async (ctx) => {
       logger(ctx.params);
       const { id } = ctx.params;
-      const task = await Task.findOne({ where: { id }, include: ['taskStatus', 'creator', 'assignedTo'] });
-      logger('task was fineded:', task);
+      const task = await Task.findOne({ where: { id }, include: ['taskStatus', 'creator', 'assignedTo', 'Tags'] });
+      // logger('task was fineded:', task);
       ctx.render('tasks/show', { task });
     })
     .get('taskUpdate', '/tasks/:id/edit', async (ctx) => {

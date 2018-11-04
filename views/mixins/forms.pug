@@ -20,3 +20,11 @@ mixin input(f, property, options = { as: 'text' })
 mixin button(f, type = 'submit')
   .form-group
     input(class='btn' type=`${type}` value=`Save`)
+
+mixin textarea(f, property, options = { rows: 5 })
+  - const value = f.object[property] === undefined ? '' : f.object[property]
+  .form-group(class=(f.errors[property] && 'has-danger'))
+    label= property
+    textarea(name=getInputName(f, property) class='form-control' rows=options['rows'] value=`${value}`)
+    if f.errors[property]
+      .form-control-feedback= f.errors[property].map(({ message }) => message).join('. ')

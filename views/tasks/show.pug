@@ -12,3 +12,6 @@ block content
         p Status: <strong>#{task.taskStatus.name}</strong>
         p Creation date: <strong>#{task.createdAt}</strong>
         p Update date: <strong>#{task.updatedAt}</strong>
+        p Tags:
+        each tag in task.Tags
+          .badge.badge-primary= tag.name
