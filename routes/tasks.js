@@ -1,5 +1,5 @@
 import buildFormObj from '../lib/formObjectBuilder';
-import { Task, TaskStatus } from '../models';
+import { Task, TaskStatus, Tag } from '../models';
 
 export default (router, { logger }) => {
   router
@@ -18,9 +18,11 @@ export default (router, { logger }) => {
       form.taskStatusId = status.id;
       logger('get from form2', form);
       const task = await Task.build(form);
-      logger(task);
+      const tag = await Tag.build({ name: 'tag2' });
+      await tag.save();
       try {
         await task.save();
+        await task.setTags(tag);
         ctx.flash.set('Task has been created');
         ctx.redirect(router.url('tasks'));
       } catch (e) {
