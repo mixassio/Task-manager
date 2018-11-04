@@ -34,7 +34,7 @@ export default (router, { logger }) => {
       const task = await Task.build(form);
       try {
         await task.save();
-        logger('task is save');
+        logger('task is saved');
         await task.addTags(tags);
         logger('tags is added');
         ctx.flash.set('Task has been created');
