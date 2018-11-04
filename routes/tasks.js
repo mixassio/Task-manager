@@ -28,7 +28,7 @@ export default (router, { logger }) => {
       logger('get from form1', form);
       const status = await TaskStatus.findOne({ where: { name: 'new' } });
       form.taskStatusId = status.id;
-      logger('get from form2', form);
+      logger('get from form2->', form);
       const { tagsName } = form;
       const tags = await getTagsByNames(tagsName.split(',').map(v => v.trim()).filter(v => v));
       const task = await Task.build(form);
