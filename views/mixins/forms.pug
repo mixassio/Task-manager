@@ -28,3 +28,18 @@ mixin textarea(f, property, options = { rows: 5 })
     textarea(name=getInputName(f, property) class='form-control' rows=options['rows'] value=`${value}`)
     if f.errors[property]
       .form-control-feedback= f.errors[property].map(({ message }) => message).join('. ')
+
+mixin select(f, property, options = { list: [] })
+  - const value = f.object[property] === undefined ? 0 : f.object[property]
+  .form-group(class=(f.errors[property] && 'has-danger'))
+    - const preparedLabel = `${_.upperFirst(_.lowerCase(property)).split(' ').filter(i => i !== 'id').join(' ')}:`
+    label= preparedLabel
+    select.custom-select(name=getInputName(f, property))
+      each option in options['list']
+        - const selected = Number(value) === Number(option.id) 
+        if selected
+          option(value=option.id selected)= option.name
+        else
+          option(value=option.id)= option.name
+    if f.errors[property]
+      .form-control-feedback= f.errors[property].map(({ message }) => message).join('. ')

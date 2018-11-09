@@ -16,10 +16,26 @@ const getTagsByNames = tagsNames => Promise.all(tagsNames
 export default (router, { logger }) => {
   router
     .get('tasks', '/tasks', async (ctx) => {
+      const { query } = ctx.request;
+      logger(ctx.query);
+      logger('-----query-----', query);
       const tasks = await Task.findAll({ include: ['taskStatus', 'creator', 'assignedTo'] });
       const { userId } = ctx.session;
       logger('userLoginID', userId);
-      ctx.render('tasks', { tasks, userId });
+      const f = buildFormObj({
+        myTasksOnly: false,
+        taskStatusId: 0,
+        assignedToId: 0,
+      }, {}, true);
+      const statusList = [{ id: 0, name: 'All' }, { id: 1, name: 'status1' }, { id: 2, name: 'status2' }];
+      const userList = [{ id: 0, name: 'All' }, { id: 1, name: 'user1' }, { id: 2, name: 'user2' }];
+      ctx.render('tasks', {
+        f,
+        tasks,
+        userId,
+        statusList,
+        userList,
+      });
     })
     .post('tasks', '/tasks', async (ctx) => {
       const { form } = ctx.request.body;
@@ -47,6 +63,7 @@ export default (router, { logger }) => {
     .patch('taskUpdate', '/tasks/:id/edit', async (ctx) => {
       const { form } = ctx.request.body;
       const { id } = ctx.params;
+      logger(form);
       const task = await Task.findOne({ where: { id } });
       logger('update task:', task.name);
       try {

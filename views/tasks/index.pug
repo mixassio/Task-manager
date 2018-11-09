@@ -3,6 +3,15 @@ extends /layouts/application.pug
 block content
   h3.text-xs-center Tasks
   a(href=urlFor('newTask')) New Task
+  +formFor(f, { url: urlFor('tasks'), method: 'get' })
+      .col-2
+        +select(f, 'taskStatusId', { list: statusList })
+      .col-3
+        +select(f, 'assignedToId', { list: userList })
+      .col-2.mt-3
+        +button(f)
+        - console.log(f);
+        //- a(href=urlFor('tasks', f.taskStatusId, f.assignedToId)) filter
   .row.mt-3
       .col-sm-6.mx-auto
         if tasks.length > 0
@@ -26,3 +35,4 @@ block content
                   = task.taskStatus.name
         else
           p Пусто
+
