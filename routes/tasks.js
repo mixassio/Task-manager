@@ -20,7 +20,9 @@ export default (router, { logger }) => {
       const statusList = createList.status(await TaskStatus.findAll());
       const userList = createList.user(await User.findAll());
       const tagList = createList.tag(await Tag.findAll());
-      const myList = (userId) ? createList.myList(await User.findOne({ where: { id: userId } })) : [];
+      const myList = (userId)
+        ? createList.myList(await User.findOne({ where: { id: userId } }))
+        : [];
       ctx.render('tasks', {
         f,
         tasks,
