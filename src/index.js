@@ -3,4 +3,4 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery-ujs';
 
-$('[data-toggle="tooltip"]').tooltip();
+// $('[data-toggle="tooltip"]').tooltip();

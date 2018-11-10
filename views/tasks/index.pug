@@ -3,15 +3,19 @@ extends /layouts/application.pug
 block content
   h3.text-xs-center Tasks
   a(href=urlFor('newTask')) New Task
-  +formFor(f, { url: urlFor('tasks'), method: 'get' })
-      .col-2
-        +select(f, 'taskStatusId', { list: statusList })
-      .col-3
-        +select(f, 'assignedToId', { list: userList })
-      .col-2.mt-3
-        +button(f)
-        - console.log(f);
-        //- a(href=urlFor('tasks', f.taskStatusId, f.assignedToId)) filter
+  div
+    +formFor(f, { url: urlFor('tasks'), method: 'get', classList: ['form-row'] })
+        if userId
+          .col-sm
+            +select(f, 'creatorId', { list: myList })
+        .col-sm
+          +select(f, 'taskStatusId', { list: statusList })
+        .col-sm
+          +select(f, 'assignedToId', { list: userList })
+        .col-sm
+          +select(f, 'tagId', { list: tagList})
+        .col-sm
+          +button(f)
   .row.mt-3
       .col-sm-6.mx-auto
         if tasks.length > 0
@@ -28,7 +32,7 @@ block content
                 td
                   if userId === task.creatorId
                     a(href=urlFor('taskUpdate', task.id)) Edit
-                    a(href=urlFor('taskDelete', task.id) data-method='delete' rel='nofollow') Delete
+                    a(href=urlFor('taskDelete', task.id) data-method='delete' rel='nofollow' data-confirm="Are you sure you want delete this task?") Delete
                 td
                   a(href=urlFor('userShow', task.creatorId))= task.assignedTo.fullName
                 td
@@ -36,3 +40,4 @@ block content
         else
           p Пусто
 
+        

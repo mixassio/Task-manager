@@ -10,24 +10,6 @@ export default (sequelize, DataTypes) => {
       },
     },
     description: DataTypes.STRING,
-  }, {
-    scopes: {
-      filterAssigned: id => ({
-        where: {
-          assignedToId: id,
-        },
-      }),
-      filterTaskStatus: id => ({
-        where: {
-          taskStatusId: id,
-        },
-      }),
-      filterCreator: id => ({
-        where: {
-          creatorId: id,
-        },
-      }),
-    },
   });
 
   Task.associate = (models) => {
