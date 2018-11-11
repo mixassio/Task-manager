@@ -36,9 +36,6 @@ export default (router, { logger }) => {
     .post('tasks', '/tasks', async (ctx) => {
       const { form } = ctx.request.body;
       form.creatorId = ctx.session.userId;
-      form.assignedToId = ctx.session.userId;
-      const status = await TaskStatus.findOne({ where: { name: 'new' } });
-      form.taskStatusId = status.id;
       const { tagsName } = form;
       const tags = await getTagsByNames(tagsName.split(',').map(v => v.trim()).filter(v => v));
       const task = await Task.build(form);
