@@ -21,15 +21,16 @@ export default (router, { logger }) => {
         return;
       }
       logger(`User with e-mail= ${email} was not finded`);
-      const err = [];
+      const errors = [];
       if (!user) {
         logger('Not user');
-        err.push({ message: 'User not registration', path: 'email' });
+        errors.push({ message: 'User not registration', path: 'email' });
       } else {
         logger('Wrong password');
-        err.push({ message: 'Wrong password', path: 'password' });
+        errors.push({ message: 'Wrong password', path: 'password' });
       }
-      ctx.render('sessions/new', { f: buildFormObj({ email }, { err }) });
+      ctx.flash.set('No email or wrong password');
+      ctx.render('sessions/new', { f: buildFormObj({ email }, { errors }) });
     })
     .delete('session', '/session', (ctx) => {
       logger(`Delete session user= ${ctx.session.userId}`);
