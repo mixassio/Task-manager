@@ -51,7 +51,7 @@ export default (router, { logger }) => {
         ctx.render('tasks/new', { f: buildFormObj(task, e) });
       }
     })
-    .patch('taskUpdate', '/tasks/:id/edit', async (ctx) => {
+    .patch('taskPatch', '/tasks/:id', async (ctx) => {
       const { form } = ctx.request.body;
       const { id } = ctx.params;
       logger(form);
@@ -69,7 +69,7 @@ export default (router, { logger }) => {
       }
     })
     .get('newTask', '/tasks/new', async (ctx) => {
-      if (!ctx.session.userId) {
+      if (!ctx.state.isSignedIn()) {
         ctx.flash.set('Only reg user can create tasks');
         ctx.redirect(router.url('newSession'));
       }
@@ -96,7 +96,7 @@ export default (router, { logger }) => {
       ctx.render('tasks/show', { task });
     })
     .get('taskUpdate', '/tasks/:id/edit', async (ctx) => {
-      if (!ctx.session.userId) {
+      if (!ctx.state.isSignedIn()) {
         ctx.flash.set('Only reg user can update tasks');
         ctx.redirect(router.url('newSession'));
       }
