@@ -80,7 +80,7 @@
     "pug": "^2.0.3",
     "rollbar": "^2.4.7",
     "sass-loader": "^8.0.0",
-    "sequelize": "^5.19.0",
+    "sequelize": "^5.19.8",
     "sequelize-cli": "^5.5.1",
     "sqlite3": "^4.0.2",
     "style-loader": "^1.0.0",
