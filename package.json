@@ -71,7 +71,7 @@
     "koa-views": "^6.1.4",
     "koa-webpack": "^5.1.0",
     "lodash": "^4.17.11",
-    "mini-css-extract-plugin": "^0.8.0",
+    "mini-css-extract-plugin": "^0.8.1",
     "node-sass": "^4.9.3",
     "nodemon": "^1.18.4",
     "pg": "^7.6.0",
