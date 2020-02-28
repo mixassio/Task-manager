@@ -39,7 +39,7 @@
   "homepage": "https://github.com/mixassio/project-lvl4-s311#readme",
   "dependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.1.2",
+    "@babel/core": "^7.8.6",
     "@babel/node": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/polyfill": "^7.0.0",
